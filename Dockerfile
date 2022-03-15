@@ -1,9 +1,8 @@
 FROM --platform=linux/arm/v7 rafa606/debian_arm_v7
-WORKDIR /catkinws
+WORKDIR /
 ENV SSL_CERT_FILE=/usr/lib/ssl/certs/ca-certificates.crt
 SHELL ["/bin/bash", "-c"]
-RUN mkdir  /catkinws/src && \
-    apt-get update && \
+RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends -o \
                         Dpkg::Options::="--force-confnew" \
                         gnupg python3 python3-dev python3-pip build-essential \
@@ -14,6 +13,7 @@ RUN mkdir  /catkinws/src && \
                         isc-dhcp-client \
                         vim \
                         screen \
+                        git \
                         tmux \
                         netcat \
                         iproute2 \
