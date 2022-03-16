@@ -17,9 +17,19 @@ RUN apt-get update && \
                         tmux \
                         netcat \
                         iproute2 \
+                        udev \
                         libssl-dev freeglut3-dev libusb-1.0-0-dev pkg-config libgtk-3-dev unzip \
     && git clone https://github.com/IntelRealSense/librealsense.git /librealsense \
-    && mkdir /librealsense/build
-RUN cd /librealsense/build && cmake .. -DFORCE_LIBUVC=true -DCMAKE_BUILD_TYPE=release && make -j3 #&& cpack -G DEB && ls
+    && mkdir /librealsense/build \
+    && cd /librealsense/build \
+    && cmake .. -DFORCE_LIBUVC=true -DCMAKE_BUILD_TYPE=release \
+    && make -j3 && make install \
+    && cp /librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/ \
+    && udevadm control --reload-rules && sudo udevadm trigger \
+    && rm -rf /var/lib/apt/lists/*
+
+
+
+
 #sudo udevadm control --reload-rules && sudo udevadm trigger
 # cp /librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/ \
