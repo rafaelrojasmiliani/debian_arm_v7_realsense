@@ -24,7 +24,8 @@ RUN apt-get update && \
     && mkdir /librealsense/build \
     && cd /librealsense/build \
     && cmake .. -DFORCE_LIBUVC=true -DCMAKE_BUILD_TYPE=release \
-    && make -j3 && make install
+    && make -j3 && make install \
+    && rm -rf /librealsense
 
 #RUN cp /librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/ \
 #    && udevadm control --reload-rules && sudo udevadm trigger 
