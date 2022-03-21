@@ -21,14 +21,15 @@ RUN apt-get update && \
                         libssl-dev freeglut3-dev libusb-1.0-0-dev pkg-config libgtk-3-dev unzip \
     && rm -rf /var/lib/apt/lists/* \
     && git clone https://github.com/IntelRealSense/librealsense.git /librealsense \
+    && cp /librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/ \
     && mkdir /librealsense/build \
     && cd /librealsense/build \
     && cmake .. -DFORCE_LIBUVC=true -DCMAKE_BUILD_TYPE=release \
-    && make -j3 && make install \
+    && make -j2 && make install \
     && rm -rf /librealsense
 
 #RUN cp /librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/ \
-#    && udevadm control --reload-rules && sudo udevadm trigger 
+#    && udevadm control --reload-rules && sudo udevadm trigger
 
 
 
